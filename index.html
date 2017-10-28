@@ -1,0 +1,130 @@
+<html>
+	<head></head>
+	<script src="./simplex.js"></script>
+	<script src="./numbers.js"></script>
+	<script src="./d3.min.js"></script>
+	<script src="./jquery.min.js"></script>
+
+	<style>
+		svg {
+			border:1px solid black;
+		}
+		.weightval {
+			width:3em;
+		}
+	</style>
+
+	<body>
+
+		<svg id="svg" width="2400" height="400"></svg>
+		Window size: <input type="text" id="numWeights"/> <button id="gobutton">Go</button>
+		<div id="weights"></div>
+		<button id="convolution">Apply Convolution</button>
+		
+		<script>
+		// visual constants for graph construction
+		const dims = {
+		    width: 2400,
+		    height: 400
+		}
+		const margins = {
+		    left: 10,
+		    right: 10,
+		    top: 10,
+		    bottom: 20
+		}
+		// create d3 objects for graph construction
+		const xRange = [margins.left, dims.width - margins.right];
+		const yRange = [dims.height - margins.top, margins.bottom];
+
+		let xScale = d3.scaleLinear()
+		    .domain([0, 300])
+		    .range(xRange);
+		let yScale = d3.scaleLinear()
+		    .domain([0, 40])
+		    .range(yRange);
+
+		let mySvg = d3.select('#svg');
+
+
+		// SET UP AXIS
+		var xAxis = d3.axisBottom(xScale);
+
+		mySvg.append("g")
+			.attr('transform',`translate(0, ${dims.height-margins.bottom})`)
+			.call(xAxis);
+
+		function update() {
+			// DATA JOIN
+   			// Join new data with old elements, if any.
+			let points = mySvg.selectAll("circle")
+	        .data(numbers);
+
+	        // UPDATE
+    		// Update old elements as needed.
+	        points.classed('update',true)
+		    .attr('cy', (d, i) => yScale(d))
+		    .attr('cx', (d, i) => xScale(i))
+			
+			// ENTER
+		    // Create new elements as needed.
+		    
+		    // ENTER + UPDATE
+		    // After merging the entered elements with the update selection,
+		    // apply operations to both.
+		    points.enter().append("circle")
+		    .attr('cy', (d, i) => yScale(d))
+	        .attr('cx', (d, i) => xScale(i))
+	        .attr('r', (d) => 3)
+		    .attr('fill','black');
+
+	        // EXIT
+			// Remove old elements as needed.
+			points.exit().remove();
+		}
+		update();
+
+
+		windowsize = 0;
+		$("#gobutton").click(function() {
+			windowsize = parseInt($("#numWeights").val());
+			$("#weights").html("");
+			console.log(windowsize);
+			for(let i=0; i<windowsize; i++) {
+				$("#weights").append($(`<input type="text" id="weight${i}" class="weightval"/>`))
+			}
+		});
+
+		$("#convolution").click(function() {
+			let weights = [];
+			for(let i=0; i<windowsize; i++) {
+				weights.push(parseFloat($(`#weight${i}`).val()));
+			}
+			console.log(weights);
+
+			let numbers2 = [];
+			for(let i=0; i<numbers.length-windowsize; i++) {
+				let newval = 0;
+				for(let j=0; j<windowsize; j++) {
+					// console.log(weights[j], numbers[i+j])
+					newval += weights[j]*numbers[i+j];
+				}
+				// console.log(newval);
+				numbers2.push(newval);
+			}
+			numbers = numbers2;
+			update();
+		});
+		</script>
+		<script>
+			function makeNumbers() {
+				let simplex = new SimplexNoise();
+
+				for(var i=0; i<300; i++) {
+					console.log((simplex.noise2D(0, 0.1*i)+1)*10);
+				}
+			}
+
+		</script>
+	</body>
+</html>
