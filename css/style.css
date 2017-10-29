@@ -1,0 +1,94 @@
+body {
+	font-family:'Raleway';
+	background:#333;
+}
+.main {
+	width:90%;
+	margin:2em auto;
+	/*background:white;*/
+}
+.title {
+	font-size:2em;
+	text-align:center;
+	text-transform: uppercase;
+	color:white;
+}
+
+.svgholder {
+	width:100%;
+	overflow:scroll;
+	/*border:1px solid black;*/
+}
+svg {
+}
+.weightval {
+	width:3em;
+}
+
+.panel {
+	margin-right:0.5em;
+	margin-bottom:0.5em;
+	background:white;
+	border-radius:4px;
+}
+.panelheader {
+	width:100%;
+	background:#e3e3e3;
+	border-radius:4px;
+}
+.panelheader h2 {
+	font-size:1.2em;
+	margin:0;
+	padding:0.4em 0.7em;
+}
+
+.ui {
+	display:flex;
+	flex-direction:row;
+	width:100%;
+}
+.leftside {
+	flex-grow:1;
+	max-width:70%;
+}
+.rightside {
+	flex-grow:1;
+	display:flex;
+	flex-direction: column;
+}
+.rightside .panel {
+	flex-grow:1;
+}
+.rightside .convolve.convolve, .rightside .current.current {
+	flex-grow:0;
+}
+.convolve h3 {
+	margin:0;
+	text-align:center;
+	padding:0.5em;
+	background:#e3e3e3;
+	border-radius:3px;
+	transition: background 0.1s, color 0.1s;
+}
+.convolve h3:hover {
+	background:#88F;
+	color:white;
+	cursor:pointer;
+}
+
+.current {
+}
+.window {
+	width:100%;
+	display:flex;
+	flex-direction:row;
+}
+.window input {
+	margin:0.2em;
+	border:2px solid #e3e3e3;
+	text-align:center;
+	flex-grow:1;
+	font-size:16pt;
+	max-width:5em;
+
+}
