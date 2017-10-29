@@ -31,15 +31,26 @@
 						<div class="panelheader">
 							<h2>Select Dataset</h2>
 						</div>
-						Window size: <input type="text" id="numWeights"/> <button id="gobutton">Go</button>
-						<div id="weights"></div>
-						<button id="convolution">Apply Convolution</button>
+						<table class="datasets">
+							<tr>
+								<td onclick="setData(0);">Generic Perlin</td>
+								<td onclick="setData(1);">Edge Detection</td>
+								<td onclick="setData(2);">Erratic Perlin</td>
+							</tr>
+							<tr>
+								<td onclick="setData(3);">White<br>Noise</td>
+								<td onclick="setData(4);">Noisy<br>Perlin</td>
+								<td onclick="setData(5);">Periodic Peaks</td>
+							</tr>
+						</table>
 					</div>
 					<div class="panel">
 						<div class="panelheader">
 							<h2>Common Windows</h2>
 						</div>
-						asdkljfa
+						<div class="commonwindows">
+							
+						</div>
 					</div>
 					<div class="panel current">
 						<div class="panelheader">
@@ -60,15 +71,5 @@
 		</section>
 		
 		<script src="./js/index.js"></script>
-		<script>
-			function makeNumbers() {
-				let simplex = new SimplexNoise();
-
-				for(var i=0; i<300; i++) {
-					console.log((simplex.noise2D(0, 0.1*i)+1)*10);
-				}
-			}
-
-		</script>
 	</body>
 </html>
